@@ -9,6 +9,8 @@ connectDB()
 
 const app = express()
 
+app.use(express.json()) // Esta línea configura la aplicación para que use el middleware de Express que permite manejar solicitudes HTTP con un cuerpo JSON.
+
 // Routes
 app.use('/api/projects', projectRoutes)
 
