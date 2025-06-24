@@ -1,14 +1,13 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose"
 
 /**
-* Represents a project type in the database.
-* Defines a data type called "ProjectType" that extends the "Document" interface (provided by mongoose)
-* and adds additional properties using "&".
-*/
-export type ProjectType = Document & {
-    projectName: string;
-    clientName: string;
-    description: string;
+ * Interface for the projects in the database. 
+ * This interface defines the structure of the documents stored in the database.
+ */
+export interface IProject extends Document {
+    projectName: string
+    clientName: string
+    description: string
 };
 
 /**
@@ -37,5 +36,5 @@ const ProjectSchema: Schema = new Schema({
  * It defines a model called 'Project' using the 'ProjectSchema'.
  * It allows performing CRUD operations on the projects collection.
  */
-const Project = mongoose.model<ProjectType>('Project', ProjectSchema);
+const Project = mongoose.model<IProject>extends'Project', ProjectSchema);
 export default Project;
