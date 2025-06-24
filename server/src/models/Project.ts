@@ -1,4 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose"
+import mongoose, { Schema, Document, PopulatedDoc, Types } from "mongoose"
+import { ITask } from "./Task"
 
 /**
  * Interface for the projects in the database. 
@@ -8,6 +9,7 @@ export interface IProject extends Document {
     projectName: string
     clientName: string
     description: string
+    tasks: PopulatedDoc<ITask & Document>[] // Reference to the tasks collection
 };
 
 /**
@@ -28,13 +30,19 @@ const ProjectSchema: Schema = new Schema({
         type: String,
         required: true,
         trim: true
-    }
-});
+    },
+    tasks: [
+        {
+            type: Types.ObjectId,
+            ref: 'Task'
+        }
+    ]
+}, {timestamps: true})
 
 /**
  * This Mongoose model represents the projects collection in the database.
  * It defines a model called 'Project' using the 'ProjectSchema'.
  * It allows performing CRUD operations on the projects collection.
  */
-const Project = mongoose.model<IProject>extends'Project', ProjectSchema);
-export default Project;
+const Project = mongoose.model<IProject>('Project', ProjectSchema)
+export default Project
