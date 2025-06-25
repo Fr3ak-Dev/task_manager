@@ -33,6 +33,9 @@ router.delete('/:id',
 /** Routes for tasks */
 router.post('/:projectId/tasks',
     validateProjectExists,
+    body('name').notEmpty().withMessage('Name is required'),
+    body('description').notEmpty().withMessage('Description is required'),
+    handleInputErrors,
     TaskController.createTask
 )
 
