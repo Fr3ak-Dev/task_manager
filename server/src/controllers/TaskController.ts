@@ -39,4 +39,20 @@ export class TaskController {
             res.status(500).json({ error: 'Internal server error' })
         }
     }
+
+    static updateTask = async (req: Request, res: Response) => {
+        try {
+            const { taskId } = req.params
+            const task = await Task.findByIdAndUpdate(taskId, req.body)
+            if (!task) {
+                return res.status(404).json({ error: 'Task not found' })
+            }
+            if (task.project.toString() !== req.project.id) {
+                return res.status(400).json({ error: 'Action not allowed' })
+            }
+            res.send("Task updated")
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' })
+        }
+    }
 }
