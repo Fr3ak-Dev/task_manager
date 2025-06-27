@@ -62,13 +62,29 @@ export class TaskController {
     static deleteTask = async (req: Request, res: Response) => {
         try {
             const { taskId } = req.params
-            const task = await Task.findById(taskId, req.body)
+            const task = await Task.findById(taskId)
             if (!task) {
                 return res.status(404).json({ error: 'Task not found' })
             }
             req.project.tasks = req.project.tasks.filter(task => task.toString() !== taskId)
             await Promise.allSettled([task.deleteOne(), req.project.save()])
             res.send("Task deleted")
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' })
+        }
+    }
+
+    static updateStatus = async (req: Request, res: Response) => {
+        try {
+            const { taskId } = req.params
+            const task = await Task.findById(taskId)
+            if (!task) {
+                return res.status(404).json({ error: 'Task not found' })
+            }
+            const { status } = req.body
+            task.status = status
+            await task.save()
+            res.send("Task status updated")
         } catch (error) {
             res.status(500).json({ error: 'Internal server error' })
         }
