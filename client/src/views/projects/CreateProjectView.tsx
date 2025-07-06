@@ -1,3 +1,4 @@
+import ProjectForm from "@/components/projects/ProjectForm";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -39,6 +40,10 @@ export default function CreateProjectView() {
                     onSubmit={handleSubmit(handleForm)}
                     noValidate // Prevents default HTML5 validation to allow react-hook-form to handle it
                 >
+                    <ProjectForm 
+                        register={register}
+                        errors={errors}
+                    />
                     <input
                         type="submit"
                         value="Crear Proyecto"
