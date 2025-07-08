@@ -13,11 +13,13 @@
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.11",
+    "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.59.0",
     "react-router-dom": "^7.6.3",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.11",
     "zod": "^3.25.75"
   },
