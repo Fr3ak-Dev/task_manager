@@ -1,6 +1,5 @@
 import { getProjectById } from "@/api/ProjectAPI"
 import AddTaskModal from "@/components/tasks/AddTaskModal"
-import AddTaskModal from "@/components/tasks/AddTaskModal"
 import { useQuery } from "@tanstack/react-query"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 
