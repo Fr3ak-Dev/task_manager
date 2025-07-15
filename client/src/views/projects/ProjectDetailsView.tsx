@@ -30,7 +30,7 @@ export default function ProjectDetailsView() {
                     onClick={() => navigate(location.pathname + '?newTask=true')}
                 >Agregar Tarea</button>
             </nav>
-            <TaskList />
+            <TaskList tasks={data.tasks} />
             <AddTaskModal />
         </>
     )
