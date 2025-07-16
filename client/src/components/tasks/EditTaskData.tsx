@@ -18,7 +18,7 @@ export default function EditTaskData() {
     enabled: !!taskId // Only run if taskId is available(true)
   })
 
-  if(data) return <EditTaskModal />
+  if(data) return <EditTaskModal data={data} />
 
   return (
     <div>EditTaskData</div>
