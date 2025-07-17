@@ -32,7 +32,7 @@ export async function getTaskById({taskId, projectId}: Pick<TaskAPI, 'taskId' | 
     }
 }
 
-export async function updateTask({taskId, projectId, formData}: Pick<TaskAPI, 'projectId' | 'taskId' | 'formData'>) {
+export async function updateTask({projectId, taskId, formData}: Pick<TaskAPI, 'projectId' | 'taskId' | 'formData'>) {
     try {
         const url = `/projects/${projectId}/tasks/${taskId}`
         const {data} = await api.put<string>(url, formData)

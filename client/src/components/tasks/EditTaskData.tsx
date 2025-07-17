@@ -15,14 +15,11 @@ export default function EditTaskData() {
   const { data, isError } = useQuery({
     queryKey: ['task', taskId],
     queryFn: () => getTaskById({ projectId, taskId }),
-    enabled: !!taskId // Only run if taskId is available(true)
+    enabled: !!taskId, // Only run if taskId is available(true)
+    retry: false
   })
 
   if (isError) return <Navigate to='/404' />
 
   if(data) return <EditTaskModal data={data} taskId={taskId} />
-
-  return (
-    <div>EditTaskData</div>
-  )
 }
