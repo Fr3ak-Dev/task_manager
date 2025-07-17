@@ -31,7 +31,7 @@ export default function TaskModalDetails() {
 
     console.log(data)
 
-    if(data) return (
+if(data) return (
         <>
             <Transition appear show={show} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={() => navigate(location.pathname, { replace: true })}>
