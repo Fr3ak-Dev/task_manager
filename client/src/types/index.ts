@@ -7,7 +7,7 @@ export const taskSchema = z.object({
     _id: z.string(),
     name: z.string(),
     description: z.string(),
-    projectId: z.string(),
+    project: z.string(),
     status: taskStatusSchema,
     createdAt: z.string(),
     updatedAt: z.string()
