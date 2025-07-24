@@ -3,6 +3,7 @@ import User from "../models/User";
 import { hashPassword } from "../utils/auth";
 import Token from "../models/Token";
 import { generateToken } from "../utils/token";
+import { transporter } from "../config/nodemailer";
 
 export class AuthController {
     static createAccount = async(req: Request, res: Response) => {
@@ -23,6 +24,15 @@ export class AuthController {
             const token = new Token()
             token.token = generateToken()
             token.user = user.id
+
+            // enviar email
+            await transporter.sendMail({
+                from: 'Tarea <admin@gmail.com>',
+                to: user.email,
+                subject: 'Confirma tu cuenta',
+                text: 'Confirma tu cuenta ahora mismo',
+                html: `<p>Probando...</p>`
+            })
 
             await Promise.allSettled([user.save(), token.save()])
             
