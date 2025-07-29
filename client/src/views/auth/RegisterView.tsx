@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { createAccount } from "@/api/Auth.api";
 
 export default function RegisterView() {
-  
+
   const initialValues: UserRegistrationForm = {
     name: '',
     email: '',
@@ -20,11 +20,11 @@ export default function RegisterView() {
   const { mutate } = useMutation({
     mutationFn: createAccount,
     onError: (error) => {
-        toast.error(error.message)
+      toast.error(error.message)
     },
     onSuccess: (data) => {
-        toast.success(data)
-        reset()
+      toast.success(data)
+      reset()
     }
   })
 
@@ -137,9 +137,14 @@ export default function RegisterView() {
 
       <nav className="mt-10 flex flex-col space-y-4">
         <Link
-            className="text-center text-gray-300 font-normal"
-            to={'/auth/login'}
+          className="text-center text-gray-300 font-normal"
+          to={'/auth/login'}
         >¿Ya tienes una cuenta? Inicia sesión</Link>
+
+        <Link
+          className="text-center text-gray-300 font-normal"
+          to={'/auth/forgot-password'}
+        >¿Olvidaste tu contraseña? Reestablecer</Link>
       </nav>
     </>
   )
