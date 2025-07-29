@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { AuthController } from "../controllers/AuthController";
-import { body } from "express-validator";
-import { handleInputErrors } from "../middleware/validation";
+import { Router } from "express"
+import { AuthController } from "../controllers/AuthController"
+import { body } from "express-validator"
+import { handleInputErrors } from "../middleware/validation"
 
 const router = Router()
 
@@ -29,6 +29,12 @@ router.post('/login',
     body('password').notEmpty().withMessage('El password no puede ir vacio'),
     handleInputErrors,
     AuthController.login
+)
+
+router.post('/request-code',
+    body('email').isEmail().withMessage('E-mail no válido'),
+    handleInputErrors,
+    AuthController.requestConfirmationCode
 )
 
 export default router
