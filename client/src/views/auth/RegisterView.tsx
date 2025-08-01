@@ -20,7 +20,7 @@ export default function RegisterView() {
   const { mutate } = useMutation({
     mutationFn: createAccount,
     onError: (error) => {
-      toast.error(error.message)
+      toast.error(error.message || "Error desconocido")
     },
     onSuccess: (data) => {
       toast.success(data)
