@@ -34,7 +34,10 @@ export class ProjectController {
         try {
             const project = await Project.findById(id).populate('tasks')
             if (!project) {
-                return res.status(404).json({error: "Project not found"})
+                return res.status(404).json({error: "Proyecto no encontrado"})
+            }
+            if (project.manager.toString() !== req.user.id.toString()) {
+                return res.status(404).json({error: "Acción no permitida"})
             }
             res.json(project)
         } catch (error) {
