@@ -7,7 +7,7 @@ export class ProjectController {
         const project = new Project(req.body)
         
         project.manager = req.user.id
-        
+
         try {
             await project.save()
             res.send("Project created")
@@ -18,7 +18,11 @@ export class ProjectController {
 
     static getAllProjects = async (req: Request, res: Response) => {
         try {
-            const projects = await Project.find({})
+            const projects = await Project.find({
+                $or: [
+                    {manager: {$in: req.user.id}}
+                ]
+            })
             res.json(projects)
         } catch (error) {
             console.log(error)
