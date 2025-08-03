@@ -12,6 +12,7 @@ export interface IProject extends Document {
     description: string
     tasks: PopulatedDoc<ITask & Document>[] // Reference to the tasks collection
     manager: PopulatedDoc<IUser & Document>
+    tema: PopulatedDoc<IUser & Document>[]
 };
 
 /**
@@ -42,7 +43,13 @@ const ProjectSchema: Schema = new Schema({
     manager: {
         type: Types.ObjectId,
         ref: 'User'
-    }
+    },
+    team: [
+        {
+            type: Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 }, {timestamps: true})
 
 /**
