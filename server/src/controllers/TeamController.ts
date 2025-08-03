@@ -21,14 +21,27 @@ export class TeamMemberController {
             return res.status(404).json({error: error.message})
         }
 
-        if (req.project.tema.some(team => team.toString() === user.id.toString())) {
+        if (req.project.team.some(team => team.toString() === user.id.toString())) {
             const error = new Error('El usuario ya existe en el proyecto')
             return res.status(409).json({error: error.message})
         }
 
-        req.project.tema.push(user.id)
+        req.project.team.push(user.id)
         await req.project.save()
 
         res.send('Usuario agregado correctamente')
+    }
+
+    static removeMemberById = async(req: Request, res: Response) => {
+        const {id} = req.body
+
+        if (!req.project.team.some(team => team.toString() === id)) {
+            const error = new Error('El usuario no esta vinculado en este proyecto')
+            return res.status(409).json({error: error.message})
+        }
+
+        req.project.team = req.project.team.filter(teamMember => teamMember.toString() !== id)    
+        await req.project.save()
+        res.send('Usuario desvinculado del proyecto correctamente')
     }
 }

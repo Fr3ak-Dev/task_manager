@@ -12,7 +12,7 @@ export interface IProject extends Document {
     description: string
     tasks: PopulatedDoc<ITask & Document>[] // Reference to the tasks collection
     manager: PopulatedDoc<IUser & Document>
-    tema: PopulatedDoc<IUser & Document>[]
+    team: PopulatedDoc<IUser & Document>[]
 };
 
 /**
