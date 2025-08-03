@@ -9,7 +9,7 @@ export async function createAccount(formData: UserRegistrationForm) {
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data.error || error.response.data?.errors?.[0]?.msg)
         }
     }
 }
