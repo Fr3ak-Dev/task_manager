@@ -93,13 +93,13 @@ router.get('/:projectId/team',
 )
 
 router.post('/:projectId/team',
-    body('email').isMongoId().withMessage('ID no válido'),
+    body('id').isMongoId().withMessage('ID no válido'),
     handleInputErrors,
     TeamMemberController.addMemberById
 )
 
 router.delete('/:projectId/team',
-    body('email').isMongoId().withMessage('ID no válido'),
+    body('id').isMongoId().withMessage('ID no válido'),
     handleInputErrors,
     TeamMemberController.removeMemberById
 )
