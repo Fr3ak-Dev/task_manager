@@ -1,21 +1,22 @@
 import { addUserToProject } from "@/api/TeamAPI"
 import { TeamMember } from "@/types/index"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 
 type SearchResultProps = {
-    user: TeamMember
-    reset: () => void
+  user: TeamMember
+  reset: () => void
 }
 
-export default function SeachResult({user, reset}: SearchResultProps) {
+export default function SeachResult({ user, reset }: SearchResultProps) {
 
   const navigate = useNavigate()
   const params = useParams()
   const projectId = params.projectId!
 
-  const {mutate} = useMutation({
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
     mutationFn: addUserToProject,
     onError: (error) => {
       toast.error(error.message)
@@ -23,7 +24,8 @@ export default function SeachResult({user, reset}: SearchResultProps) {
     onSuccess: (data) => {
       toast.success(data)
       reset()
-      navigate(location.pathname, {replace:true})
+      navigate(location.pathname, { replace: true })
+      queryClient.invalidateQueries({ queryKey: ['projectTeam', projectId] })
     }
   })
 
@@ -37,14 +39,14 @@ export default function SeachResult({user, reset}: SearchResultProps) {
 
   return (
     <>
-        <p className="mt-10 text-center font-bold">Resultado:</p>
-        <div className="flex justify-between items-center">
-            <p>{user.name}</p>
-            <button
-                className="text-purple-600 hover:bg-purple-100 px-10 py-3 font-bold"
-                onClick={handleAddUserToProject}
-            >Agregar al Proyecto</button>
-        </div>
+      <p className="mt-10 text-center font-bold">Resultado:</p>
+      <div className="flex justify-between items-center">
+        <p>{user.name}</p>
+        <button
+          className="text-purple-600 hover:bg-purple-100 px-10 py-3 font-bold"
+          onClick={handleAddUserToProject}
+        >Agregar al Proyecto</button>
+      </div>
     </>
   )
 }
