@@ -99,7 +99,7 @@ router.post('/:projectId/team',
 )
 
 router.delete('/:projectId/team/:userId',
-    param('id').isMongoId().withMessage('ID no válido'),
+    param('userId').isMongoId().withMessage('ID no válido'),
     handleInputErrors,
     TeamMemberController.removeMemberById
 )
