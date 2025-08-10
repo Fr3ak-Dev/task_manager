@@ -50,7 +50,7 @@ export default function TaskModalDetails() {
         return <Navigate to={`/projects/${projectId}`} />
     }
 
-if(data) return (
+    if (data) return (
         <>
             <Transition appear show={show} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={() => navigate(location.pathname, { replace: true })}>
@@ -86,15 +86,18 @@ if(data) return (
                                     >{data.name}
                                     </Dialog.Title>
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
-                                    {data.completedBy && (
-                                        <p>
-                                            <span className='font-bold text-slate-600'>Estado actualizado por:</span>
-                                            {' '}{data.completedBy.name}
-                                        </p>
-                                    )}
+                                    <p className='text-lg text-slate-500 mb-2'>Historial de Cambios</p>
+                                    <ul>
+                                        {data.completedBy.map((activityLog) => (
+                                            <li key={activityLog._id}>
+                                                <span className='font-bold text-slate-600'>{statusTranslations[activityLog.status]}</span>
+                                                {' '} por: {activityLog.user.name}
+                                            </li>
+                                        ))}
+                                    </ul>
                                     <div className='my-5 space-y-3'>
                                         <label className='font-bold'>Estado Actual:</label>
-                                        <select 
+                                        <select
                                             className='w-full p-3 bg-white border border-gray-300'
                                             defaultValue={data.status}
                                             onChange={handleChange}
