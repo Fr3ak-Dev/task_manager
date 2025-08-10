@@ -1,13 +1,13 @@
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getTaskById, updateStatus } from '@/api/TaskAPI';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
-import { formatDate } from '@/utils/utils';
-import { statusTranslations } from '@/locales/es';
-import { TaskStatus } from '@/types/index';
-import NotesPanel from '../notes/NotesPanel';
+import { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getTaskById, updateStatus } from '@/api/TaskAPI'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
+import { formatDate } from '@/utils/utils'
+import { statusTranslations } from '@/locales/es'
+import { TaskStatus } from '@/types/index'
+import NotesPanel from '../notes/NotesPanel'
 
 export default function TaskModalDetails() {
 
@@ -89,7 +89,7 @@ export default function TaskModalDetails() {
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
                                     {data.completedBy.length ? (
                                         <>
-                                            <p className='text-lg text-slate-500 mb-2'>Historial de Cambios</p>
+                                            <p className='font-bold text-2xl ntext-slate-600 my-5'>Historial de Cambios</p>
                                             <ul>
                                                 {data.completedBy.map((activityLog) => (
                                                     <li key={activityLog._id}>
@@ -112,7 +112,7 @@ export default function TaskModalDetails() {
                                             ))}
                                         </select>
                                     </div>
-                                    <NotesPanel />
+                                    <NotesPanel notes={data.notes} />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
