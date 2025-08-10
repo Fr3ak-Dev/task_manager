@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { formatDate } from '@/utils/utils';
 import { statusTranslations } from '@/locales/es';
 import { TaskStatus } from '@/types/index';
+import NotesPanel from '../notes/NotesPanel';
 
 export default function TaskModalDetails() {
 
@@ -19,7 +20,7 @@ export default function TaskModalDetails() {
 
     const show = taskId ? true : false
 
-    const {data, isError, error} = useQuery({
+    const { data, isError, error } = useQuery({
         queryKey: ['task', taskId],
         queryFn: () => getTaskById({ projectId, taskId }),
         enabled: !!taskId, // Only run if taskId is available(true)
@@ -27,26 +28,26 @@ export default function TaskModalDetails() {
     })
 
     const queryClient = useQueryClient()
-    const {mutate} = useMutation({
+    const { mutate } = useMutation({
         mutationFn: updateStatus,
         onError: (error) => {
             toast.error(error.message)
         },
         onSuccess: (data) => {
             toast.success(data)
-            queryClient.invalidateQueries({queryKey: ['project', projectId]})
-            queryClient.invalidateQueries({queryKey: ['task', taskId]})
+            queryClient.invalidateQueries({ queryKey: ['project', projectId] })
+            queryClient.invalidateQueries({ queryKey: ['task', taskId] })
         }
     })
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const status = e.target.value as TaskStatus
-        const data = {projectId, taskId, status}
+        const data = { projectId, taskId, status }
         mutate(data)
     }
 
     if (isError) {
-        toast.error(error.message, {toastId: 'error'})
+        toast.error(error.message, { toastId: 'error' })
         return <Navigate to={`/projects/${projectId}`} />
     }
 
@@ -86,15 +87,19 @@ export default function TaskModalDetails() {
                                     >{data.name}
                                     </Dialog.Title>
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
-                                    <p className='text-lg text-slate-500 mb-2'>Historial de Cambios</p>
-                                    <ul>
-                                        {data.completedBy.map((activityLog) => (
-                                            <li key={activityLog._id}>
-                                                <span className='font-bold text-slate-600'>{statusTranslations[activityLog.status]}</span>
-                                                {' '} por: {activityLog.user.name}
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    {data.completedBy.length ? (
+                                        <>
+                                            <p className='text-lg text-slate-500 mb-2'>Historial de Cambios</p>
+                                            <ul>
+                                                {data.completedBy.map((activityLog) => (
+                                                    <li key={activityLog._id}>
+                                                        <span className='font-bold text-slate-600'>{statusTranslations[activityLog.status]}</span>
+                                                        {' '} por: {activityLog.user.name}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    ) : null}
                                     <div className='my-5 space-y-3'>
                                         <label className='font-bold'>Estado Actual:</label>
                                         <select
@@ -107,6 +112,7 @@ export default function TaskModalDetails() {
                                             ))}
                                         </select>
                                     </div>
+                                    <NotesPanel />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
