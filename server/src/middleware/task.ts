@@ -32,7 +32,7 @@ export function taskBelongsToProject(req: Request, res: Response, next: NextFunc
 
 export function hasAuthorization(req: Request, res: Response, next: NextFunction) {
     if (req.user.id.toString() !== req.project.manager.toString()) {
-        return res.status(400).json({ error: 'No tienes el rol para realizar esta accidn' })
+        return res.status(400).json({ error: 'No tienes el rol necesario para realizar esta acción' })
     }
     next()
 }
