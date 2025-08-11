@@ -20,6 +20,7 @@ export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path='/profile' element={<ProfileView />} />
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<DashboardView />} />
                     <Route path='/projects/create' element={<CreateProjectView />} />
@@ -27,7 +28,6 @@ export default function Router() {
                     <Route path='/projects/:projectId/edit' element={<EditProjectView />} />
                     <Route path='/projects/:projectId/team' element={<ProjectTeamView />} />
                     <Route element={<ProfileLayout />}>
-                        <Route path='/profile' element={<ProfileView />} />
                         <Route path='/profile/password' element={<ChangePasswordView />} />
                     </Route>
                 </Route>
