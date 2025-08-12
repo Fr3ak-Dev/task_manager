@@ -64,7 +64,7 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
             mutate({ projectId, taskId, status })
 
             queryClient.setQueryData(['project', projectId], (prevData) => {
-                const updatedTasks = prevData.tasks.map((task: Task)=>{
+                const updatedTasks = prevData.tasks.map((task: Task) => {
                     if (task._id === taskId) {
                         return {
                             ...task,
@@ -76,7 +76,7 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
 
                 return {
                     ...prevData,
-                    task: updatedTasks
+                    tasks: updatedTasks
                 }
             })
         }
