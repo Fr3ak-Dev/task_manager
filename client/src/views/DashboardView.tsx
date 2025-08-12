@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import { deleteProject, getProjects } from "@/api/ProjectAPI";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProjects } from "@/api/ProjectAPI";
+import { useQuery} from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
@@ -18,19 +18,6 @@ export default function DashboardView() {
   const { data, isLoading } = useQuery({
     queryKey: ['projects'],
     queryFn: getProjects
-  })
-
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation({
-    mutationFn: deleteProject,
-    onError: (error) => {
-      toast.error(error.message)
-    },
-    onSuccess: (data) => {
-      toast.success(data)
-      queryClient.invalidateQueries({ queryKey: ['projects'] }) // Invalidates the 'projects' query, causing it to refetch the latest data
-    }
   })
 
   if (isLoading && authLoading) return 'Cargando...'

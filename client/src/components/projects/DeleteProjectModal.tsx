@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { CheckPasswordForm } from '@/types/index';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { checkPassword } from '@/api/Auth.api';
 import { toast } from 'react-toastify';
+import { deleteProject } from '@/api/ProjectAPI';
 
 export default function DeleteProjectModal() {
     const initialValues: CheckPasswordForm = {
@@ -21,16 +22,28 @@ export default function DeleteProjectModal() {
 
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
+    const queryClient = useQueryClient()
     const checkUserPasswordMutation = useMutation({
         mutationFn: checkPassword,
         onError: (error) => toast.error(error.message)
     })
 
+    const deleteProjectMutation = useMutation({
+        mutationFn: deleteProject,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+            queryClient.invalidateQueries({ queryKey: ['projects'] })
+            navigate(location.pathname, {replace: true})
+        }
+    })
+
     const handleForm = async (formData: CheckPasswordForm) => {
         await checkUserPasswordMutation.mutateAsync(formData)
-        console.log('Despues de la mutación...')
+        await deleteProjectMutation.mutateAsync(deleteProjectId)
     }
-
 
     return (
         <Transition appear show={show} as={Fragment}>
