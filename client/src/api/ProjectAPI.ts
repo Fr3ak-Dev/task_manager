@@ -36,7 +36,6 @@ export async function getProjectById(id: Project['_id']) {
         if (response.success) {
             return response.data
         }
-        return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
