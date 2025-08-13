@@ -26,20 +26,23 @@ router.get('/:id',
     param('id').isMongoId().withMessage('Invalid project id'),
     handleInputErrors,
     ProjectController.getProjectById)
-router.put('/:id',
-    param('id').isMongoId().withMessage('Invalid project id'),
+
+/** Routes for tasks */
+router.param('projectId', projectExists)
+
+router.put('/:projectId',
+    param('projectId').isMongoId().withMessage('Invalid project id'),
     body('projectName').notEmpty().withMessage('Project name is required'),
     body('clientName').notEmpty().withMessage('Client name is required'),
     body('description').notEmpty().withMessage('Description is required'),
     handleInputErrors,
     ProjectController.updateProject)
-router.delete('/:id',
-    param('id').isMongoId().withMessage('Invalid project id'),
+    
+router.delete('/:projectId',
+    param('projectId').isMongoId().withMessage('Invalid project id'),
     handleInputErrors,
+    hasAuthorization,
     ProjectController.deleteProject)
-
-/** Routes for tasks */
-router.param('projectId', projectExists)
 
 router.post('/:projectId/tasks',
     hasAuthorization,
@@ -85,7 +88,7 @@ router.post('/:projectId/tasks/:taskId/status',
     TaskController.updateStatus
 )
 
-/** Routes fro teams */
+/** Routes for teams */
 router.post('/:projectId/team/find',
     body('email').isEmail().toLowerCase().withMessage('E-mail no válido'),
     handleInputErrors,
