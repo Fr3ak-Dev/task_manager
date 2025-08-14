@@ -10,7 +10,7 @@ export class ProjectController {
 
         try {
             await project.save()
-            res.send("Project created")
+            res.send("Proyecto creado")
         } catch (error) {
             console.log(error)
         }
@@ -52,7 +52,7 @@ export class ProjectController {
             req.project.projectName = req.body.projectName
             req.project.description = req.body.description
             await req.project.save()
-            res.send("Project updated")
+            res.send("Proyecto actualizado")
         } catch (error) {
             console.log(error)
         }
@@ -61,7 +61,7 @@ export class ProjectController {
     static deleteProject = async (req: Request, res: Response) => {
         try {
             await req.project.deleteOne()
-            res.send("Project deleted")
+            res.send("Proyecto eliminado")
         } catch (error) {
             console.log(error)
         }
