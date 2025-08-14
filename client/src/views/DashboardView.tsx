@@ -2,9 +2,8 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import { getProjects } from "@/api/ProjectAPI";
-import { useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
 import { isManager } from '@/utils/policies';
 import DeleteProjectModal from '@/components/projects/DeleteProjectModal';
