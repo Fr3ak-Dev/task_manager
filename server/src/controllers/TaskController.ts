@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import Project from "../models/Project";
 import Task from "../models/Task";
 
 export class TaskController {
@@ -9,9 +8,9 @@ export class TaskController {
             task.project = req.project.id
             req.project.tasks.push(task.id)
             await Promise.allSettled([task.save(), req.project.save()])
-            res.send("Task created")
+            res.send("Tarea creada")
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' })
+            res.status(500).json({ error: 'Error interno del servidor' })
         }
     }
 
@@ -20,7 +19,7 @@ export class TaskController {
             const tasks = await Task.find({ project: req.project.id }).populate('project')
             res.json(tasks)
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' })
+            res.status(500).json({ error: 'Error interno del servidor' })
         }
     }
 
@@ -31,7 +30,7 @@ export class TaskController {
                 .populate({ path: 'notes', populate: { path: 'createdBy', select: 'id name email' } })
             res.json(task)
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' })
+            res.status(500).json({ error: 'Error interno del servidor' })
         }
     }
 
@@ -40,9 +39,9 @@ export class TaskController {
             req.task.name = req.body.name
             req.task.description = req.body.description
             await req.task.save()
-            res.send("Task updated")
+            res.send("Tarea actualizada")
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' })
+            res.status(500).json({ error: 'Error interno del servidor' })
         }
     }
 
@@ -50,9 +49,9 @@ export class TaskController {
         try {
             req.project.tasks = req.project.tasks.filter(task => task.toString() !== req.task.id.toString())
             await Promise.allSettled([req.task.deleteOne(), req.project.save()])
-            res.send("Task deleted")
+            res.send("Tarea eliminada")
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' })
+            res.status(500).json({ error: 'Error interno del servidor' })
         }
     }
 
@@ -70,7 +69,7 @@ export class TaskController {
             await req.task.save()
             res.send("Estado de la tarea actualizado")
         } catch (error) {
-            res.status(500).json({ error: 'Error Interno del Servidor' })
+            res.status(500).json({ error: 'Error interno del servidor' })
         }
     }
 }

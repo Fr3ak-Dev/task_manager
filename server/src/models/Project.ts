@@ -63,7 +63,7 @@ ProjectSchema.pre('deleteOne', { document: true }, async function () {
         await Note.deleteMany({ task: task.id })
     }
 
-    await Project.deleteMany({ task: projectId })
+    await Task.deleteMany({ project: projectId })
 })
 
 /**
