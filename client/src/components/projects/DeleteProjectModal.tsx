@@ -20,12 +20,15 @@ export default function DeleteProjectModal() {
     const deleteProjectId = queryParams.get('deleteProject')!;
     const show = deleteProjectId ? true : false
 
-    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues })
 
     const queryClient = useQueryClient()
     const checkUserPasswordMutation = useMutation({
         mutationFn: checkPassword,
-        onError: (error) => toast.error(error.message)
+        onError: (error) => toast.error(error.message),
+        onSettled: () => {
+            reset()
+        }
     })
 
     const deleteProjectMutation = useMutation({
@@ -36,7 +39,10 @@ export default function DeleteProjectModal() {
         onSuccess: (data) => {
             toast.success(data)
             queryClient.invalidateQueries({ queryKey: ['projects'] })
-            navigate(location.pathname, {replace: true})
+            navigate(location.pathname, { replace: true })
+        },
+        onSettled: () => {
+            reset()
         }
     })
 
@@ -45,9 +51,14 @@ export default function DeleteProjectModal() {
         await deleteProjectMutation.mutateAsync(deleteProjectId)
     }
 
+    const handleClose = () => {
+        reset()
+        navigate(location.pathname, { replace: true })
+    }
+
     return (
         <Transition appear show={show} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={() => navigate(location.pathname, { replace: true })}>
+            <Dialog as="div" className="relative z-10" onClose={handleClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

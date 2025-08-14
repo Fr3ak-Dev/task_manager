@@ -42,7 +42,7 @@ export default function AddNoteForm() {
             <div className="flex flex-col gap-2">
                 <label className="font-bold" htmlFor="content">Crear Nota</label>
                 <input id="content" type="text" placeholder="Contenido de la nota"
-                    className="w-full jp-3 border border-gray-300"
+                    className="w-full p-3 border border-gray-300"
                     {...register('content', {
                         required: 'El contenido de la nota es obligatorio'
                     })}
